@@ -6,8 +6,7 @@ import { useStateValue } from "../../ContextAPI/StateProvider";
 import { Link } from "react-router-dom";
 
 function Checkout() {
-  const [{ basket, user }] = useStateValue();
-
+  const [{ basket }] = useStateValue();
   return (
     <div className="checkout">
       <div className="checkout__left">
@@ -20,7 +19,9 @@ function Checkout() {
           <h2 className="checkout__title">Your Shopping Basket</h2>
 
           {basket.length ? (
-            <CheckoutProduct />
+            basket.map((item, index) => (
+              <CheckoutProduct key={index} item={item} />
+            ))
           ) : (
             <p className="checkout__noitems">
               You have no items in your basket. To buy one or more items, click

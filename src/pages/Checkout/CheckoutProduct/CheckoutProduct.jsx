@@ -1,18 +1,41 @@
-import React from "react";
+import React, { useRef, useState, useEffect } from "react";
 import "./CheckoutProduct.scss";
 import { useStateValue } from "../../../ContextAPI/StateProvider";
 
-function CheckoutProduct({ product }) {
-  const [{ basket }, dispatch] = useStateValue();
+function CheckoutProduct({ item }) {
+  const { id, title, image, price, rating, quantity } = item;
+  const [{}, dispatch] = useStateValue();
+  const productRef = useRef(null);
 
-  const removeProductHandler = (index) => {
+  const removeProductHandler = () => {
+    let timer;
+    productRef.current.classList.add("fadeout");
+
+    timer = setTimeout(() => {
+      clearTimeout(timer);
+      productRef.current && productRef.current.classList.remove("fadeOut");
+      dispatch({
+        type: "REMOVE_FROM_BASKET",
+        payload: { id },
+      });
+    }, 200);
+  };
+
+  const handleInputQuantityChange = (value) => {
     dispatch({
-      type: "REMOVE_FROM_BASKET",
-      payload: { index },
+      type: "CHANGE_QUANTITY",
+      payload: { id, quantity: value },
     });
   };
-  return basket.map(({ title, image, rating, price }, i) => (
-    <div className="checkoutProduct" key={i}>
+
+  const handleButtonQuantityChange = (type) => {
+    dispatch({
+      type: "CHANGE_QUANTITY",
+      payload: { id, type },
+    });
+  };
+  return (
+    <div className="checkoutProduct" ref={productRef}>
       <img src={image} alt="item" className="checkoutProduct__image" />
       <div className="checkoutProduct__info">
         <p className="checkoutProduct__title">{title}</p>
@@ -27,16 +50,45 @@ function CheckoutProduct({ product }) {
               <p key={i}>🌟</p>
             ))}
         </div>
-        <button
-          onClick={() => {
-            removeProductHandler(i);
-          }}
-        >
-          Remove from basket
-        </button>
+        <div className="checkoutProduct__quantity">
+          <button
+            onClick={() => {
+              handleButtonQuantityChange("sub");
+            }}
+          >
+            -
+          </button>
+
+          <input
+            value={quantity}
+            onInput={(e) => {
+              if (e.target.validity.valid && +e.target.value < 1000) {
+                handleInputQuantityChange(e.target.value);
+              }
+            }}
+            onBlur={(e) => {
+              if (e.target.value === "") {
+                return handleInputQuantityChange(1);
+              }
+              if (+e.target.value === 0) {
+                removeProductHandler();
+              }
+            }}
+            pattern="[0-9]*"
+          />
+
+          <button
+            onClick={() => {
+              handleButtonQuantityChange("add");
+            }}
+          >
+            +
+          </button>
+        </div>
+        <button onClick={removeProductHandler}>Remove from basket</button>
       </div>
     </div>
-  ));
+  );
 }
 
 export default CheckoutProduct;

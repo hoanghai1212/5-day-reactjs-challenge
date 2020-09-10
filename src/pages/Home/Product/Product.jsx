@@ -19,7 +19,6 @@ function Product({ id, title, image, price, rating }) {
       },
     });
   };
-
   return (
     <div className="product">
       <div className="product__info">
@@ -37,7 +36,14 @@ function Product({ id, title, image, price, rating }) {
         </div>
       </div>
       <img src={image} alt="product" />
-      <button onClick={addToBasketHandler}>Add to basket</button>
+
+      <button
+        onClick={(e) => {
+          addToBasketHandler();
+        }}
+      >
+        Add to basket
+      </button>
     </div>
   );
 }

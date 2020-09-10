@@ -3,20 +3,24 @@
   margin: 20px 0;
 
   &__image {
+    object-fit: contain;
     width: 180px;
     height: 180px;
-    object-fit: contain;
   }
 
   &__info {
     padding-left: 20px;
 
     & > button {
-      background: #f0c14b;
+      cursor: pointer;
+
       margin-top: 10px;
+      background: #f0c14b;
+
       border-color: #a88734 #9c7e31 #846a29;
       border-style: solid;
       border-width: 1px;
+
       color: #111;
     }
   }
@@ -28,5 +32,69 @@
 
   &__rating {
     display: flex;
+  }
+
+  &__quantity {
+    display: flex;
+    align-items: center;
+
+    width: -webkit-fit-content;
+
+    width: -moz-fit-content;
+
+    width: fit-content;
+    margin-top: 10px;
+
+    border: 1px solid rgba(0, 0, 0, 0.35);
+    border-radius: 2px;
+
+    & > button {
+      cursor: pointer;
+      padding: 0 8px;
+
+      background: none;
+      border: none;
+      outline: 0;
+
+      font-size: 20px;
+    }
+
+    & > input {
+      width: 30px;
+      padding: 0;
+
+      border: none;
+      outline: none;
+
+      text-align: center;
+      font-size: 17px;
+    }
+  }
+}
+
+.fadeout {
+  -webkit-animation: fadeout 0.2s;
+  animation: fadeout 0.2s;
+}
+
+@-webkit-keyframes fadeout {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: translateY(-30px);
+    transform: translateY(-30px);
+  }
+}
+
+@keyframes fadeout {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: translateY(-30px);
+    transform: translateY(-30px);
   }
 }
