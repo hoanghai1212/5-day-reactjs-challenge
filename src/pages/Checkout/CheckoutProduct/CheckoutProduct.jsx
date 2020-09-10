@@ -1,19 +1,19 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./CheckoutProduct.scss";
 import { useStateValue } from "../../../ContextAPI/StateProvider";
 
 function CheckoutProduct({ item }) {
   const { id, title, image, price, rating, quantity } = item;
+  const [onRemove, setOnRemove] = useState(false);
   const [{}, dispatch] = useStateValue();
-  const productRef = useRef(null);
 
   const removeProductHandler = () => {
     let timer;
-    productRef.current.classList.add("fadeout");
+    setOnRemove(true);
 
     timer = setTimeout(() => {
       clearTimeout(timer);
-      productRef.current && productRef.current.classList.remove("fadeOut");
+      setOnRemove(false);
       dispatch({
         type: "REMOVE_FROM_BASKET",
         payload: { id },
@@ -35,7 +35,7 @@ function CheckoutProduct({ item }) {
     });
   };
   return (
-    <div className="checkoutProduct" ref={productRef}>
+    <div className={["checkoutProduct", onRemove ? "fadeout" : ""].join(" ")}>
       <img src={image} alt="item" className="checkoutProduct__image" />
       <div className="checkoutProduct__info">
         <p className="checkoutProduct__title">{title}</p>
@@ -61,7 +61,7 @@ function CheckoutProduct({ item }) {
 
           <input
             value={quantity}
-            onInput={(e) => {
+            onChange={(e) => {
               if (e.target.validity.valid && +e.target.value < 1000) {
                 handleInputQuantityChange(e.target.value);
               }

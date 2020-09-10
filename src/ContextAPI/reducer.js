@@ -5,7 +5,7 @@ export const initialState = {
 
 //Selector
 export const getBasketTotal = (basket) => basket?.reduce((sum, currentProd) => (sum + currentProd.price * currentProd.quantity), 0);
-
+export const getBasketTotalItem = (basket) => basket?.reduce((sum, currentProd) => (sum + +currentProd.quantity), 0);
 const reducer = (state, { type, payload }) =>
 {
     switch (type)
