@@ -1,6 +1,6 @@
 import React from "react";
 import "./Product.scss";
-import { useStateValue } from "../../ContextAPI/StateProvider";
+import { useStateValue } from "../../../ContextAPI/StateProvider";
 function Product({ id, title, image, price, rating }) {
   const [, dispatch] = useStateValue();
 

@@ -1,24 +1,47 @@
-import React from "react";
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import React, { useEffect } from "react";
+import { BrowserRouter as Router } from 'react-router-dom'
 
-import Header from "./component/Header/Header";
-import Home from "./component/Home/Home";
-import Checkout from "./component/Checkout/Checkout";
+import Home from "./pages/Home/Home";
+import Checkout from "./pages/Checkout/Checkout";
 
 import "./App.scss";
+import HomeTemplate from "./templates/HomeTemplate/HomeTemplate";
+import AuthTemplate from "./templates/AuthTemplate/AuthTemplate";
+import Login from "./pages/Login/Login";
+import { auth } from "./config/firebase";
+import { useStateValue } from "./ContextAPI/StateProvider";
 
 
 
 function App()
 {
+  const [{ }, dispatch] = useStateValue();
+  useEffect(() =>
+  {
+
+    auth.onAuthStateChanged(authUser =>
+    {
+      if (authUser)
+      {
+        dispatch({
+          type: 'SET_USER',
+          payload: { user: authUser }
+        })
+      } else
+      {
+        dispatch({
+          type: 'SET_USER',
+          payload: { user: null }
+        })
+      }
+    })
+  }, [])
   return (
     <Router>
       <div className="app">
-        <Header />
-        <Switch>
-          <Route path='/checkout' component={Checkout} />
-          <Route path='/' component={Home} />
-        </Switch>
+        <AuthTemplate path="/login" Component={Login} />
+        <HomeTemplate path="/checkout" Component={Checkout} />
+        <HomeTemplate exact path="/" Component={Home} />
       </div>
     </Router>
   );
