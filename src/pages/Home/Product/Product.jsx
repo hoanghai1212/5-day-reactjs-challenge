@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
+import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import "./Product.scss";
 import { useStateValue } from "../../../ContextAPI/StateProvider";
 function Product({ id, title, image, price, rating }) {
   const [, dispatch] = useStateValue();
+  const [onAdd, setOnAdd] = useState(false);
 
   const addToBasketHandler = () => {
+    let timer;
+    setOnAdd(true);
+    timer = setTimeout(() => {
+      clearTimeout(timer);
+      setOnAdd(false);
+    }, 100);
+
     //dispatch the item into the data layer
     dispatch({
       type: "ADD_TO_BASKET",
@@ -41,8 +50,9 @@ function Product({ id, title, image, price, rating }) {
         onClick={(e) => {
           addToBasketHandler();
         }}
+        className={onAdd ? "activated" : ""}
       >
-        Add to basket
+        <AddShoppingCartIcon className="product__addIcon" /> Add to basket
       </button>
     </div>
   );

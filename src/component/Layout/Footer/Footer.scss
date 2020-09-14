@@ -1,0 +1,58 @@
+.footer {
+  display: flex;
+  flex-direction: column;
+
+  & > button {
+    cursor: pointer;
+    background-color: #37475a;
+    padding: 15px 0;
+
+    border: none;
+    outline: none;
+
+    color: white;
+
+    &:hover {
+      background-color: rgba(#37475a, 0.9);
+    }
+  }
+
+  &__container {
+    display: flex;
+    justify-content: space-evenly;
+    background-color: #232f3e;
+
+    padding: 50px 15%;
+  }
+
+  &__col {
+    &Title {
+      padding: 8px 0;
+      font-weight: 800;
+      font-size: 17px;
+      color: white;
+    }
+
+    &Link {
+      display: flex;
+      flex-direction: column;
+
+      a {
+        display: inline-flex;
+        padding: 5px 0;
+
+        font-size: 14px;
+        color: #e4e4e4;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      svg {
+        margin-left: -5px;
+        font-size: 16px;
+      }
+    }
+  }
+}

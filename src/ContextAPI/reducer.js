@@ -44,6 +44,10 @@ const reducer = (state, { type, payload }) =>
             }
             return { ...state, basket: newBasket }
         }
+
+        case "EMPTY_BASKET": {
+            return { ...state, basket: [] }
+        }
         default:
             return state;
     }

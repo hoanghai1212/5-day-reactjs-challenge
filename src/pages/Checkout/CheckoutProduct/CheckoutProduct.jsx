@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import "./CheckoutProduct.scss";
 import { useStateValue } from "../../../ContextAPI/StateProvider";
 
-function CheckoutProduct({ item }) {
+function CheckoutProduct({ item, hideButton }) {
   const { id, title, image, price, rating, quantity } = item;
   const [onRemove, setOnRemove] = useState(false);
   const [{}, dispatch] = useStateValue();
@@ -50,42 +50,56 @@ function CheckoutProduct({ item }) {
               <p key={i}>🌟</p>
             ))}
         </div>
-        <div className="checkoutProduct__quantity">
-          <button
-            onClick={() => {
-              handleButtonQuantityChange("sub");
-            }}
-          >
-            -
-          </button>
 
-          <input
-            value={quantity}
-            onChange={(e) => {
-              if (e.target.validity.valid && +e.target.value < 1000) {
-                handleInputQuantityChange(e.target.value);
-              }
-            }}
-            onBlur={(e) => {
-              if (e.target.value === "") {
-                return handleInputQuantityChange(1);
-              }
-              if (+e.target.value === 0) {
-                removeProductHandler();
-              }
-            }}
-            pattern="[0-9]*"
-          />
+        {!hideButton ? (
+          <Fragment>
+            <div className="checkoutProduct__quantity">
+              <button
+                onClick={() => {
+                  handleButtonQuantityChange("sub");
+                }}
+              >
+                -
+              </button>
 
-          <button
-            onClick={() => {
-              handleButtonQuantityChange("add");
-            }}
-          >
-            +
-          </button>
-        </div>
-        <button onClick={removeProductHandler}>Remove from basket</button>
+              <input
+                value={quantity}
+                onChange={(e) => {
+                  if (e.target.validity.valid && +e.target.value < 1000) {
+                    handleInputQuantityChange(e.target.value);
+                  }
+                }}
+                onBlur={(e) => {
+                  if (e.target.value === "") {
+                    return handleInputQuantityChange(1);
+                  }
+                  if (+e.target.value === 0) {
+                    removeProductHandler();
+                  }
+                }}
+                pattern="[0-9]*"
+              />
+
+              <button
+                onClick={() => {
+                  handleButtonQuantityChange("add");
+                }}
+              >
+                +
+              </button>
+            </div>
+            <button
+              onClick={removeProductHandler}
+              className={onRemove ? "activated" : ""}
+            >
+              Remove
+            </button>
+          </Fragment>
+        ) : (
+          <p className="checkoutProduct__orderQuantity">
+            Qty: <strong>{quantity}</strong>{" "}
+          </p>
+        )}
       </div>
     </div>
   );

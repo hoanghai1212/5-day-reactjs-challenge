@@ -1,0 +1,6 @@
+{
+    "terminal.integrated.fontFamily": "DroidSansMono Nerd Font Mono",
+    "terminal.integrated.cursorStyle": "line",
+    "terminal.integrated.cursorBlinking": true,
+    "terminal.integrated.fontWeight": "bold"
+}

@@ -3,6 +3,7 @@
   padding: 20px;
   background-color: white;
   height: max-content;
+  min-height: 500px;
 
   &__ad {
     width: 100%;
@@ -20,7 +21,20 @@
   }
 
   &__return {
-    color: #ebb736;
+    text-decoration: underline;
+    color: #e6a61d;
     font-weight: 800;
+  }
+
+  &__suggestions {
+    padding: 20px;
+
+    .checkout__title {
+      font-size: 20px;
+    }
+
+    &Products {
+      display: flex;
+    }
   }
 }
